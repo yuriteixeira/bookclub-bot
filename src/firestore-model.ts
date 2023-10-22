@@ -9,7 +9,6 @@ import {
   CollectionReference,
   Firestore,
   getFirestore,
-  QueryDocumentSnapshot,
 } from 'firebase-admin/firestore';
 
 import { Reading, ReadingModel } from './types';
@@ -42,7 +41,7 @@ export const readingModel: Partial<ReadingModel> = {
       book,
       start: new Date(),
       isCurrent: true,
-      readersProgress: []
+      readersProgress: [],
     });
   },
 
