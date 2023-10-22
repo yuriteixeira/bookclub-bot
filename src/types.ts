@@ -25,6 +25,7 @@ export type Reading = {
 };
 
 export type ReadingModel = {
+  startNewReading: (book: Book) => Promise<void>;
   getCurrentReading: () => Promise<Reading | undefined>;
   joinCurrentReading: (readerId: ReaderId) => Promise<void>;
   leaveCurrentReading: (readerId: ReaderId) => Promise<void>;

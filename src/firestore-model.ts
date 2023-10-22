@@ -37,6 +37,15 @@ const getCollection = <T extends Collections>(collectionName: T) =>
   db().collection(collectionName) as CollectionReference<CollectionTypes[T]>;
 
 export const readingModel: Partial<ReadingModel> = {
+  async startNewReading(book) {
+    await getCollection('readings').doc('current').set({
+      book,
+      start: new Date(),
+      isCurrent: true,
+      readersProgress: []
+    });
+  },
+
   async getCurrentReading() {
     const doc = await getCollection('readings').doc('current').get();
     if (!doc.exists) return;
@@ -45,7 +54,19 @@ export const readingModel: Partial<ReadingModel> = {
 };
 
 export async function testDataStore() {
-  console.log('||| Testing data store');
-  if (!readingModel.getCurrentReading) return;
-  console.log('... Current reading:', await readingModel.getCurrentReading());
+  console.log('Testing data store');
+
+  const { getCurrentReading, startNewReading } = readingModel;
+  if (!startNewReading) return;
+  if (!getCurrentReading) return;
+
+  console.log('Current reading: ADD');
+  await startNewReading({
+    isbn: '123',
+    name: 'Fake Book',
+    url: 'https://fake.book',
+  });
+
+  console.log('Current reading: GET');
+  console.log(await getCurrentReading());
 }
