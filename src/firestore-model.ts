@@ -4,7 +4,15 @@
 import serviceAccount from '../service-account.json';
 
 import { initializeApp, cert, ServiceAccount } from 'firebase-admin/app';
-import { Firestore, getFirestore } from 'firebase-admin/firestore';
+
+import {
+  CollectionReference,
+  Firestore,
+  getFirestore,
+  QueryDocumentSnapshot,
+} from 'firebase-admin/firestore';
+
+import { Reading, ReadingModel } from './types';
 
 let firestore: Firestore;
 
@@ -19,10 +27,25 @@ function db() {
   return firestore;
 }
 
+type CollectionTypes = {
+  readings: Reading;
+};
+
+type Collections = keyof CollectionTypes;
+
+const getCollection = <T extends Collections>(collectionName: T) =>
+  db().collection(collectionName) as CollectionReference<CollectionTypes[T]>;
+
+export const readingModel: Partial<ReadingModel> = {
+  async getCurrentReading() {
+    const doc = await getCollection('readings').doc('current').get();
+    if (!doc.exists) return;
+    return doc.data();
+  },
+};
+
 export async function testDataStore() {
-  console.log('... Testing data store');
-  const snapshot = await db().collection('test').get();
-  snapshot.forEach((doc) => {
-    console.log(doc.id, '=>', doc.data());
-  });
+  console.log('||| Testing data store');
+  if (!readingModel.getCurrentReading) return;
+  console.log('... Current reading:', await readingModel.getCurrentReading());
 }

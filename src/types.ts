@@ -16,7 +16,7 @@ type ReadingProgress = {
   pctg: number;
 };
 
-type Reading = {
+export type Reading = {
   book: Book;
   readersProgress: Record<ReaderId, ReadingProgress>;
   isCurrent: boolean;
@@ -24,10 +24,10 @@ type Reading = {
   end?: Date;
 };
 
-type ReadingModel = {
-  getCurrentReading: () => Reading;
-  joinReading: (readerId: ReaderId, reading: Reading) => void;
-  leaveReading: (readerId: ReaderId, reading: Reading) => void;
-  getReaderProgressPctg: (readerId: ReaderId, reading: Reading) => number;
-  getGroupsProgressPctg: (reading: Reading) => number;
+export type ReadingModel = {
+  getCurrentReading: () => Promise<Reading | undefined>;
+  joinCurrentReading: (readerId: ReaderId) => Promise<void>;
+  leaveCurrentReading: (readerId: ReaderId) => Promise<void>;
+  getReaderProgressPctgForCurrentReading: (readerId: ReaderId) => Promise<number>;
+  getGroupsProgressPctgForCurrentReading: () => Promise<number>;
 };
