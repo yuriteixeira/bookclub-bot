@@ -7,7 +7,7 @@ type Book = {
 type ReaderId = number;
 
 type Reader = {
-  id: ReaderId;
+  telegramId: ReaderId;
   name: string;
 };
 
