@@ -4,6 +4,7 @@ import { Bot } from 'grammy';
 
 import { settingsMiddleware } from './bot-settings';
 import { helloWorldMiddleware } from './bot-hello-world';
+import { testDataStore } from './firestore-model';
 
 function main() {
   const token = process.env.TELEGRAM_BOT_TOKEN;
@@ -15,6 +16,8 @@ function main() {
   helloWorldMiddleware(bot);
 
   console.log('>>> BookClubBot RUNNING!');
+  testDataStore();
+
   bot.start();
 }
 

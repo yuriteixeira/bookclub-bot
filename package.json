@@ -6,6 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "firebase-admin": "^11.11.0",
     "grammy": "^1.11.2"
   },
   "devDependencies": {
