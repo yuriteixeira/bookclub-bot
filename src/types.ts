@@ -28,6 +28,6 @@ export type ReadingModel = {
   getCurrentReading: () => Promise<Reading | undefined>;
   joinCurrentReading: (readerId: ReaderId) => Promise<void>;
   leaveCurrentReading: (readerId: ReaderId) => Promise<void>;
-  getReaderProgressPctgForCurrentReading: (readerId: ReaderId) => Promise<number>;
-  getGroupsProgressPctgForCurrentReading: () => Promise<number>;
+  getReaderProgressPctg: (readerId: ReaderId) => Promise<number>;
+  getGroupProgressPctg: () => Promise<number>;
 };
