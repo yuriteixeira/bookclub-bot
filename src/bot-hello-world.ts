@@ -1,9 +1,10 @@
 import { Bot } from 'grammy';
+import { BotContext } from './bot';
 
 // TODO: For testing only, remove when in production
-export function helloWorldMiddleware(bot: Bot) {
-  bot.on('message:text', async (ctx) => {
-    console.log('>>> MSG RECEIVED: ' + ctx.message.text);
+export function helloWorldBotDecorator(bot: Bot<BotContext>) {
+  bot.on('message', async (ctx) => {
+    console.log('MSG RECEIVED: ' + ctx.message.text);
 
     ctx.deleteMessage();
 

@@ -2,10 +2,11 @@
   "name": "bookclub-bot",
   "version": "0.0.0",
   "scripts": {
-    "start": "ts-node-dev ./src/bot.ts",
+    "start": "ts-node-dev ./src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@grammyjs/conversations": "^1.1.2",
     "firebase-admin": "^11.11.0",
     "grammy": "^1.11.2"
   },

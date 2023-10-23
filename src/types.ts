@@ -1,7 +1,7 @@
 type Book = {
   name: string;
-  isbn: string;
-  url: string;
+  isbn?: string;
+  url?: string;
 };
 
 type ReaderId = number;

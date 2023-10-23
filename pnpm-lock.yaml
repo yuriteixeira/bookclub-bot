@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@grammyjs/conversations':
+    specifier: ^1.1.2
+    version: 1.1.2(grammy@1.19.2)
   firebase-admin:
     specifier: ^11.11.0
     version: 11.11.0
@@ -69,6 +72,17 @@ packages:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
     dev: true
+
+  /@deno/shim-deno-test@0.4.0:
+    resolution: {integrity: sha512-oYWcD7CpERZy/TXMTM9Tgh1HD/POHlbY9WpzmAk+5H8DohcxG415Qws8yLGlim3EaKBT2v3lJv01x4G0BosnaQ==}
+    dev: false
+
+  /@deno/shim-deno@0.16.1:
+    resolution: {integrity: sha512-s9v0kzF5bm/o9TgdwvsraHx6QNllYrXXmKzgOG2lh4LFXnVMr2gpjK/c/ve6EflQn1MqImcWmVD8HAv5ahuuZQ==}
+    dependencies:
+      '@deno/shim-deno-test': 0.4.0
+      which: 2.0.2
+    dev: false
 
   /@fastify/busboy@1.2.1:
     resolution: {integrity: sha512-7PQA7EH43S0CxcOa9OeAnaeA0oQ+e/DHNPZwSQM9CQHW76jle5+OvLdibRp/Aafs9KXbLhxyjOTkRjWUbQEd3Q==}
@@ -200,6 +214,20 @@ packages:
       - supports-color
     dev: false
     optional: true
+
+  /@grammyjs/conversations@1.1.2(grammy@1.19.2):
+    resolution: {integrity: sha512-ARBxa8oBMips2E2ZBVhB5/UFuzx8F3d721p6dJSJ7wSX9Gzuw2KZuQJOrhQnbQWZLgZz4bKBRuqbGzazKXPtZg==}
+    engines: {node: ^12.20.0 || >=14.13.1}
+    peerDependencies:
+      grammy: ^1.10.0
+    dependencies:
+      '@grammyjs/types': 3.3.0
+      debug: 4.3.4
+      grammy: 1.19.2
+      o-son: 1.0.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
 
   /@grammyjs/types@3.3.0:
     resolution: {integrity: sha512-18Qb12jXiIptqZAlboJMvFxNxydLskUjvE5PbU8ergKQlNIr8jRvYoHDm4t/x3qEfpf+FNhGw23lyZfgEE6e/g==}
@@ -1191,6 +1219,10 @@ packages:
     dev: false
     optional: true
 
+  /isexe@2.0.0:
+    resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
+    dev: false
+
   /jose@4.15.4:
     resolution: {integrity: sha512-W+oqK4H+r5sITxfxpSU+MMdr/YSWGvgZMQDIsNoBDGGy4i7GBPTtvFKibQzW06n3U3TqHjhvBJsirShsEJ6eeQ==}
     dev: false
@@ -1514,6 +1546,12 @@ packages:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /o-son@1.0.2:
+    resolution: {integrity: sha512-wWHDKHHL2+U6E9HoNc9GqZ14h4l8k8BK565bGk8P4jKqPRDlS/gSsyIP3Atq55CfJY9w7bg+Jyp0LIQv0g4aEg==}
+    dependencies:
+      '@deno/shim-deno': 0.16.1
+    dev: false
 
   /object-hash@3.0.0:
     resolution: {integrity: sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==}
@@ -2045,6 +2083,14 @@ packages:
       webidl-conversions: 3.0.1
     dev: false
 
+  /which@2.0.2:
+    resolution: {integrity: sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==}
+    engines: {node: '>= 8'}
+    hasBin: true
+    dependencies:
+      isexe: 2.0.0
+    dev: false
+
   /word-wrap@1.2.5:
     resolution: {integrity: sha512-BN22B5eaMMI9UMtjrGd5g5eCYPpCPDUy0FJXbYsaT5zYxjFOckS53SQDE3pWkVoWpHXVb3BrYcEN4Twa55B5cA==}
     engines: {node: '>=0.10.0'}
@@ -2090,6 +2136,7 @@ packages:
 
   /yallist@4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
+    requiresBuild: true
     dev: false
 
   /yargs-parser@21.1.1:
