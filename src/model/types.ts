@@ -30,5 +30,6 @@ export type ReadingModel = {
   joinCurrentReading: (readerId: ReaderId) => Promise<void>;
   leaveCurrentReading: (readerId: ReaderId) => Promise<void>;
   getReaderProgressPctg: (readerId: ReaderId) => Promise<number>;
+  setReaderProgressPctg: (readerId: ReaderId, pctg: number) => Promise<void>;
   getGroupProgressPctg: () => Promise<number>;
 };
