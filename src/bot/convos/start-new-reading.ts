@@ -1,6 +1,7 @@
 import { InlineKeyboard } from 'grammy';
 import { BotContext, BotConversation } from '../bot';
 import { Reading } from '../../model/types';
+import { readingModel } from '../../dic';
 
 export async function startNewReading(
   conversation: BotConversation,
@@ -46,10 +47,11 @@ export async function startNewReading(
 
   const book: Reading['book'] = {
     name,
-    isbn,
-    url,
+    isbn: isbn.replace('/skip', ''),
+    url: url.replace('/skip', ''),
   };
 
-  // TODO: Store new reading using book
+  await readingModel.startNewReading(book);
+
   ctx.reply('✅ New reading just got started! Enjoy!');
 }

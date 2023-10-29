@@ -1,7 +1,7 @@
 // TODO: Change how we handle loading the service account
 //       Important: cloud functions don't require that
 //       https://firebase.google.com/docs/firestore/quickstart?authuser=0#initialize
-import serviceAccount from '../service-account.json';
+import serviceAccount from '../../service-account.json';
 
 import { initializeApp, cert, ServiceAccount } from 'firebase-admin/app';
 
@@ -35,7 +35,7 @@ type Collections = keyof CollectionTypes;
 const getCollection = <T extends Collections>(collectionName: T) =>
   db().collection(collectionName) as CollectionReference<CollectionTypes[T]>;
 
-export const readingModel: Partial<ReadingModel> = {
+export const readingModel: ReadingModel = {
   async startNewReading(book) {
     await getCollection('readings').doc('current').set({
       book,
