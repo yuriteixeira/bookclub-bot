@@ -41,7 +41,7 @@ function getOptionsKeyboard() {
 
   for (const option in options) {
     const description = options[option as Option] as string;
-    optionsKeyboard.text(description, option);
+    optionsKeyboard.text(description, option).row();
   }
 
   return optionsKeyboard;
