@@ -7,7 +7,7 @@ export async function joinCurrentReading(
   ctx: BotContext
 ) {
   const id = ctx.from?.id;
-  const name = `${ctx.from?.first_name} (${ctx.from?.username})`;
+  const name = `${ctx.from?.first_name} (@${ctx.from?.username})`;
 
   if (!id || !name) {
     await ctx.reply(
