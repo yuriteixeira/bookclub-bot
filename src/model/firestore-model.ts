@@ -35,9 +35,11 @@ type Collections = keyof CollectionTypes;
 const getCollection = <T extends Collections>(collectionName: T) =>
   db().collection(collectionName) as CollectionReference<CollectionTypes[T]>;
 
+const currentReadingDoc = getCollection('readings').doc('current');
+
 export const readingModel: ReadingModel = {
   async startNewReading(book) {
-    await getCollection('readings').doc('current').set({
+    await currentReadingDoc.set({
       book,
       start: new Date(),
       isCurrent: true,
@@ -46,7 +48,7 @@ export const readingModel: ReadingModel = {
   },
 
   async getCurrentReading() {
-    const doc = await getCollection('readings').doc('current').get();
+    const doc = await currentReadingDoc.get();
     if (!doc.exists) return;
     return doc.data();
   },
