@@ -2,20 +2,12 @@ import { InlineKeyboard } from 'grammy';
 import { BotContext, BotConversation } from '../bot';
 import { Reading } from '../../model/types';
 import { readingModel } from '../../dic';
+import { confirm, yesNoKeyboard } from './shared';
 
 export async function startNewReading(
   conversation: BotConversation,
   ctx: BotContext
 ) {
-  enum confirm {
-    YES = 'yes',
-    NO = 'no',
-  }
-
-  const yesNoKeyboard = new InlineKeyboard()
-    .text('Yes', confirm.YES)
-    .text('No', confirm.NO);
-
   await ctx.reply('📚 Start a new reading? SURE! May I ask...');
 
   await ctx.reply('1️⃣ Question 1/3: Book name?');
