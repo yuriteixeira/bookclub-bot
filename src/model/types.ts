@@ -1,19 +1,16 @@
-type Book = {
+export type Book = {
   name: string;
   isbn?: string;
   url?: string;
 };
 
-type ReaderId = number;
+export type ReaderId = number;
 
-type Reader = {
-  telegramId: ReaderId;
+export type ReadingProgress = {
   name: string;
-};
-
-type ReadingProgress = {
-  reader: Reader;
   pctg: number;
+  start: Date;
+  lastUpdate: Date;
 };
 
 export type Reading = {
@@ -27,7 +24,7 @@ export type Reading = {
 export type ReadingModel = {
   startNewReading: (book: Book) => Promise<void>;
   getCurrentReading: () => Promise<Reading | undefined>;
-  // joinCurrentReading: (readerId: ReaderId) => Promise<void>;
+  joinCurrentReading: (id: ReaderId, name: string) => Promise<void>;
   // leaveCurrentReading: (readerId: ReaderId) => Promise<void>;
   // getReaderProgressPctg: (readerId: ReaderId) => Promise<number>;
   // setReaderProgressPctg: (readerId: ReaderId, pctg: number) => Promise<void>;

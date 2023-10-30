@@ -11,7 +11,7 @@ import {
   getFirestore,
 } from 'firebase-admin/firestore';
 
-import { Reading, ReadingModel } from './types';
+import { ReaderId, Reading, ReadingModel, ReadingProgress } from './types';
 
 let firestore: Firestore;
 
@@ -43,7 +43,7 @@ export const readingModel: ReadingModel = {
       book,
       start: new Date(),
       isCurrent: true,
-      readersProgress: [],
+      readersProgress: {},
     });
   },
 
@@ -52,22 +52,16 @@ export const readingModel: ReadingModel = {
     if (!doc.exists) return;
     return doc.data();
   },
+
+  async joinCurrentReading(id: ReaderId, name: string) {
+    const now = new Date();
+    await currentReadingDoc.update({
+      [`readersProgress.${id}`]: {
+        name,
+        pctg: 0,
+        start: now,
+        lastUpdate: now,
+      } as ReadingProgress,
+    });
+  },
 };
-
-export async function testDataStore() {
-  console.log('Testing data store');
-
-  const { getCurrentReading, startNewReading } = readingModel;
-  if (!startNewReading) return;
-  if (!getCurrentReading) return;
-
-  console.log('Current reading: ADD');
-  await startNewReading({
-    isbn: '123',
-    name: 'Fake Book',
-    url: 'https://fake.book',
-  });
-
-  console.log('Current reading: GET');
-  console.log(await getCurrentReading());
-}

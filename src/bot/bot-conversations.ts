@@ -3,6 +3,7 @@ import { BotContext } from './bot';
 import { conversations, createConversation } from '@grammyjs/conversations';
 import { ReadingModel } from '../model/types';
 import { startNewReading } from './convos/start-new-reading';
+import { joinCurrentReading } from './convos/join-current-reading';
 
 type Option = keyof ReadingModel;
 type OptionsWithDescription = Record<Option, string>;
@@ -13,6 +14,9 @@ export function conversationsBotDecorator(bot: Bot<BotContext>) {
 
   bot.use(createConversation(startNewReading));
   assignBotConversationForOption(bot, 'startNewReading');
+
+  bot.use(createConversation(joinCurrentReading));
+  assignBotConversationForOption(bot, 'joinCurrentReading');
 
   bot.command('start', async (ctx) => {
     ctx.reply('Welcome to BookClubBot! How can I help you today?', {
@@ -42,5 +46,6 @@ function getOptionsKeyboard() {
 function getOptions(): Partial<OptionsWithDescription> {
   return {
     startNewReading: 'Start a new reading',
+    joinCurrentReading: 'Join the current reading',
   };
 }
