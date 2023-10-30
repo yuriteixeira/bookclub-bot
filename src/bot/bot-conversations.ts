@@ -23,10 +23,10 @@ export function conversationsBotDecorator(bot: Bot<BotContext>) {
   bot.use(createConversation(leaveCurrentReading));
   assignBotConversationForOption(bot, 'leaveCurrentReading');
 
-  bot.command('start', async (ctx) => {
   bot.use(createConversation(updateProgressCurrentReading));
   assignBotConversationForOption(bot, 'updateProgressCurrentReading');
 
+  bot.command(['start', 'help'], async (ctx) => {
     ctx.reply('Welcome to BookClubBot! How can I help you today?', {
       reply_markup: getOptionsKeyboard(),
     });
