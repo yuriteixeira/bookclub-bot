@@ -67,7 +67,6 @@ export const readingModel: ReadingModel = {
   },
 
   async leaveCurrentReading(id: ReaderId) {
-    const now = new Date();
     await currentReadingDoc.update({
       [`readersProgress.${id}`]: FieldValue.delete(),
     });
