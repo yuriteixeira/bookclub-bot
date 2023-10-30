@@ -6,6 +6,7 @@ import { startNewReading } from './convos/start-new-reading';
 import { joinCurrentReading } from './convos/join-current-reading';
 import { leaveCurrentReading } from './convos/leave-current-reading';
 import { updateProgressCurrentReading } from './convos/update-progress-current-reading';
+import { getCurrentReading } from './convos/get-current-reading';
 
 type Option = keyof ReadingModel;
 type OptionsWithDescription = Record<Option, string>;
@@ -25,6 +26,9 @@ export function conversationsBotDecorator(bot: Bot<BotContext>) {
 
   bot.use(createConversation(updateProgressCurrentReading));
   assignBotConversationForOption(bot, 'updateProgressCurrentReading');
+
+  bot.use(createConversation(getCurrentReading));
+  assignBotConversationForOption(bot, 'getCurrentReading');
 
   bot.command(['start', 'help'], async (ctx) => {
     ctx.reply('Welcome to BookClubBot! How can I help you today?', {
@@ -57,5 +61,6 @@ function getOptions(): Partial<OptionsWithDescription> {
     joinCurrentReading: 'Join the current reading',
     leaveCurrentReading: 'Leave the current reading',
     updateProgressCurrentReading: 'Update progress',
+    getCurrentReading: 'Summary of current reading',
   };
 }
