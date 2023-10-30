@@ -7,6 +7,7 @@ import { initializeApp, cert, ServiceAccount } from 'firebase-admin/app';
 
 import {
   CollectionReference,
+  FieldValue,
   Firestore,
   getFirestore,
 } from 'firebase-admin/firestore';
@@ -62,6 +63,13 @@ export const readingModel: ReadingModel = {
         start: now,
         lastUpdate: now,
       } as ReadingProgress,
+    });
+  },
+
+  async leaveCurrentReading(id: ReaderId) {
+    const now = new Date();
+    await currentReadingDoc.update({
+      [`readersProgress.${id}`]: FieldValue.delete(),
     });
   },
 };
