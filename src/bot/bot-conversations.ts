@@ -11,6 +11,8 @@ import { getCurrentReading } from './convos/get-current-reading';
 type Option = keyof ReadingModel;
 type OptionsWithDescription = Record<Option, string>;
 
+const allowedGroups = [-1002129590777];
+
 export function conversationsBotDecorator(bot: Bot<BotContext>) {
   bot.use(session({ initial: () => ({}) }));
   bot.use(conversations());
@@ -31,6 +33,11 @@ export function conversationsBotDecorator(bot: Bot<BotContext>) {
   assignBotConversationForOption(bot, 'getCurrentReading');
 
   bot.command(['start', 'help'], async (ctx) => {
+    if (!allowedGroups.find((id) => id === ctx.chat.id)) {
+      ctx.reply(`❌ Access denied for this group (ID ${ctx.chat.id}). Sorry :/`);
+      return;
+    }
+
     ctx.reply('Welcome to BookClubBot! How can I help you today?', {
       reply_markup: getOptionsKeyboard(),
     });
