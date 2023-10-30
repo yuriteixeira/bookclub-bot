@@ -72,4 +72,10 @@ export const readingModel: ReadingModel = {
       [`readersProgress.${id}`]: FieldValue.delete(),
     });
   },
+
+  async updateProgressCurrentReading(id: ReaderId, pctg: number) {
+    await currentReadingDoc.update({
+      [`readersProgress.${id}.pctg`]: pctg,
+    });
+  },
 };

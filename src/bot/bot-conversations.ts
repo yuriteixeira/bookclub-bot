@@ -5,6 +5,7 @@ import { ReadingModel } from '../model/types';
 import { startNewReading } from './convos/start-new-reading';
 import { joinCurrentReading } from './convos/join-current-reading';
 import { leaveCurrentReading } from './convos/leave-current-reading';
+import { updateProgressCurrentReading } from './convos/update-progress-current-reading';
 
 type Option = keyof ReadingModel;
 type OptionsWithDescription = Record<Option, string>;
@@ -23,6 +24,9 @@ export function conversationsBotDecorator(bot: Bot<BotContext>) {
   assignBotConversationForOption(bot, 'leaveCurrentReading');
 
   bot.command('start', async (ctx) => {
+  bot.use(createConversation(updateProgressCurrentReading));
+  assignBotConversationForOption(bot, 'updateProgressCurrentReading');
+
     ctx.reply('Welcome to BookClubBot! How can I help you today?', {
       reply_markup: getOptionsKeyboard(),
     });
@@ -52,5 +56,6 @@ function getOptions(): Partial<OptionsWithDescription> {
     startNewReading: 'Start a new reading',
     joinCurrentReading: 'Join the current reading',
     leaveCurrentReading: 'Leave the current reading',
+    updateProgressCurrentReading: 'Update progress',
   };
 }

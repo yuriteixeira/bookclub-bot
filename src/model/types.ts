@@ -27,6 +27,6 @@ export type ReadingModel = {
   joinCurrentReading: (id: ReaderId, name: string) => Promise<void>;
   leaveCurrentReading: (readerId: ReaderId) => Promise<void>;
   // getReaderProgressPctg: (readerId: ReaderId) => Promise<number>;
-  // setReaderProgressPctg: (readerId: ReaderId, pctg: number) => Promise<void>;
+  updateProgressCurrentReading: (id: ReaderId, pctg: number) => Promise<void>;
   // getGroupProgressPctg: () => Promise<number>;
 };
