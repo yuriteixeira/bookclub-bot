@@ -11,7 +11,9 @@ import { getCurrentReading } from './convos/get-current-reading';
 type Option = keyof ReadingModel;
 type OptionsWithDescription = Record<Option, string>;
 
-const allowedGroups = [-1002129590777];
+const testGroupId = -1002129590777;
+const bookclubGroupId = -1001542621265;
+const allowedGroups = [ testGroupId, bookclubGroupId ];
 
 export function conversationsBotDecorator(bot: Bot<BotContext>) {
   bot.use(session({ initial: () => ({}) }));
