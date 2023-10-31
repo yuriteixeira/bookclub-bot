@@ -1,5 +1,4 @@
-import { main } from './bot/bot';
+import { spawn } from 'node:child_process';
 
-console.log('>>> BookClubBot RUNNING!');
-
-main();
+spawn('pnpm', ['run', 'start:api'], { stdio: 'inherit' });
+spawn('pnpm', ['run', 'start:bot'], { stdio: 'inherit' });
