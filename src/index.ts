@@ -1,4 +1,4 @@
 import { spawn } from 'node:child_process';
 
-spawn('pnpm', ['run', 'start:api'], { stdio: 'inherit' });
-spawn('pnpm', ['run', 'start:bot'], { stdio: 'inherit' });
+spawn('node', ['./dist/src/run-api.js'], { stdio: 'inherit' });
+spawn('node', ['./dist/src/run-bot.js'], { stdio: 'inherit' });
