@@ -1,8 +1,3 @@
-// TODO: Change how we handle loading the service account
-//       Important: cloud functions don't require that
-//       https://firebase.google.com/docs/firestore/quickstart?authuser=0#initialize
-import serviceAccount from '../../service-account.json';
-
 import { initializeApp, cert, ServiceAccount } from 'firebase-admin/app';
 
 import {
@@ -14,10 +9,20 @@ import {
 
 import { ReaderId, Reading, ReadingModel, ReadingProgress } from './types';
 
+import 'dotenv/config';
+
 let firestore: Firestore;
 
 function db() {
   if (firestore) return firestore;
+
+  const serviceAccountData = process.env.GCP_SERVICE_ACCOUNT_JSON;
+  console.log('>>> serviceAccountData', { serviceAccountData });
+
+  if (!serviceAccountData)
+    throw new Error('GCP_SERVICE_ACCOUNT_JSON env variable is not set!');
+
+  const serviceAccount = JSON.parse(serviceAccountData);
 
   initializeApp({
     credential: cert(serviceAccount as ServiceAccount),
@@ -29,14 +34,18 @@ function db() {
 
 type CollectionTypes = {
   readings: Reading;
+  readings_dev: Reading;
 };
 
 type Collections = keyof CollectionTypes;
 
+const collectionName =
+  process.env.NODE_ENV === 'production' ? 'readings' : 'readings_dev';
+
 const getCollection = <T extends Collections>(collectionName: T) =>
   db().collection(collectionName) as CollectionReference<CollectionTypes[T]>;
 
-const currentReadingDoc = getCollection('readings').doc('current');
+const currentReadingDoc = getCollection(collectionName).doc('current');
 
 export const readingModel: ReadingModel = {
   async startNewReading(book) {

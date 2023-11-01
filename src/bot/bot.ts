@@ -6,6 +6,8 @@ import { settingsBotDecorator } from './bot-settings';
 import { conversationsBotDecorator } from './bot-conversations';
 import { Conversation, ConversationFlavor } from '@grammyjs/conversations';
 
+import 'dotenv/config';
+
 export type BotContext = Context & ConversationFlavor;
 export type BotConversation = Conversation<BotContext>;
 
