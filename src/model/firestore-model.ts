@@ -24,7 +24,6 @@ function db() {
   if (firestore) return firestore;
 
   const serviceAccountData = process.env.GCP_SERVICE_ACCOUNT_JSON;
-  console.log('>>> serviceAccountData', { serviceAccountData });
 
   if (!serviceAccountData)
     throw new Error('GCP_SERVICE_ACCOUNT_JSON env variable is not set!');
