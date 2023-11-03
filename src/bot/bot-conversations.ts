@@ -6,7 +6,10 @@ import { startNewReading } from './convos/start-new-reading';
 import { joinCurrentReading } from './convos/join-current-reading';
 import { leaveCurrentReading } from './convos/leave-current-reading';
 import { updateProgressCurrentReading } from './convos/update-progress-current-reading';
-import { getCurrentReading } from './convos/get-current-reading';
+import {
+  getCurrentReading,
+  getCurrentReadingCommand,
+} from './convos/get-current-reading';
 
 import 'dotenv/config';
 
@@ -21,6 +24,8 @@ export function registerCommandsAndConversations(bot: Bot<BotContext>) {
       reply_markup: getOptionsKeyboard(),
     });
   });
+
+  bot.command('summary', getCurrentReadingCommand);
 }
 
 function registerConversations(bot: Bot<BotContext>) {

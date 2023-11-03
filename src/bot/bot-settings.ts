@@ -8,37 +8,10 @@ const commands = [
     command: 'start',
     description: 'Show all the available options',
   },
-  /*
   {
-    command: 'current',
-    description: 'Show book that folks are reading now',
+    command: 'summary',
+    description: 'Summary of current reading',
   },
-  {
-    command: 'join',
-    description: 'Join club on reading the current book',
-  },
-  {
-    command: 'leave',
-    description: 'Give up on reading the current book',
-  },
-  {
-    command: 'myprogress',
-    description: 'Update my progress on the current book',
-  },
-  {
-    command: 'progress',
-    description: 'Check progress of Club on the current book',
-  },
-  {
-    command: 'spoilers',
-    description:
-      'Spoiler protection: All messages will be forwarded as spoilers',
-  },
-  {
-    command: 'nospoilers',
-    description: 'Disable spoiler protection',
-  },
-  */
 ];
 
 export function registerSettings(bot: Bot<BotContext>) {

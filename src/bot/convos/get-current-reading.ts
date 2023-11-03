@@ -3,6 +3,10 @@ import { readingModel } from '../../dic';
 import { Timestamp } from 'firebase-admin/firestore';
 
 export async function getCurrentReading(_: BotConversation, ctx: BotContext) {
+  return getCurrentReadingCommand(ctx);
+}
+
+export async function getCurrentReadingCommand(ctx: BotContext) {
   const currentReading = await readingModel.getCurrentReading();
 
   if (!currentReading) {
