@@ -6,8 +6,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "dev": "ts-node-dev ./src/run-bot.ts",
-    "start": "node ./dist/src/run-bot.js"
+    "start": "ts-node-dev ./src/run-bot.ts",
+    "start:prod": "NODE_ENV=production node ./dist/src/run-bot.js"
   },
   "dependencies": {
     "@grammyjs/conversations": "^1.1.2",
