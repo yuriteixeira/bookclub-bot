@@ -1,4 +1,4 @@
-import { Bot, CommandContext, InlineKeyboard, session } from 'grammy';
+import { Bot, InlineKeyboard, session } from 'grammy';
 import { BotContext } from './bot';
 import { conversations, createConversation } from '@grammyjs/conversations';
 import { ReadingModel } from '../model/types';
@@ -9,7 +9,6 @@ import { updateProgressCurrentReading } from './convos/update-progress-current-r
 import { getCurrentReading } from './convos/get-current-reading';
 
 import 'dotenv/config';
-import {permissionsModel} from '../dic';
 
 type Option = keyof ReadingModel;
 type OptionsWithDescription = Record<Option, string>;
@@ -17,14 +16,7 @@ type OptionsWithDescription = Record<Option, string>;
 export function registerCommandsAndConversations(bot: Bot<BotContext>) {
   registerConversations(bot);
 
-  bot.command(['start', 'help'], async (ctx) => {
-    if (!userOrGroupIsAllowed(ctx)) {
-      ctx.reply(
-        `❌ Access denied for this group (ID ${ctx.chat.id}). Sorry :/`
-      );
-      return;
-    }
-
+  bot.command(['start'], async (ctx) => {
     ctx.reply('Welcome to BookClubBot! How can I help you today?', {
       reply_markup: getOptionsKeyboard(),
     });
@@ -49,12 +41,6 @@ function registerConversations(bot: Bot<BotContext>) {
 
   bot.use(createConversation(getCurrentReading));
   assignBotConversationForOption(bot, 'getCurrentReading');
-}
-
-async function userOrGroupIsAllowed(ctx: CommandContext<BotContext>) {
-  const allowedGroups = await permissionsModel.getAllowedGroups();
-  if (!allowedGroups) return false;
-  return allowedGroups.find((id) => id === ctx.chat.id);
 }
 
 function assignBotConversationForOption(bot: Bot<BotContext>, option: Option) {

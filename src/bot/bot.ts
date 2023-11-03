@@ -5,6 +5,8 @@ import { Bot, Context } from 'grammy';
 import { registerSettings } from './bot-settings';
 import { registerCommandsAndConversations } from './bot-conversations';
 import { Conversation, ConversationFlavor } from '@grammyjs/conversations';
+import { registerErrorHandler } from './bot-error-handler';
+import { authCheck } from './bot-auth';
 
 import 'dotenv/config';
 
@@ -15,8 +17,12 @@ export function getBot() {
   const token = getTelegramToken();
   const bot = new Bot<BotContext>(token);
 
+  bot.use(authCheck);
+
   registerSettings(bot);
   registerCommandsAndConversations(bot);
+  registerErrorHandler(bot);
+
 
   return bot;
 }
