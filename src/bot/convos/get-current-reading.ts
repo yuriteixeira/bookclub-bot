@@ -24,16 +24,17 @@ export async function getCurrentReadingCommand(ctx: BotContext) {
     .reverse();
 
   const msg =
-    `Summary of ${currentReading.book.name} (${
-      currentReading.book.url || 'no link'
-    }), ` +
-    `which started on ${(currentReading.start as unknown as Timestamp)
+    `*Summary of [${currentReading.book.name}](${
+      currentReading.book.url || '#nolink'
+    })*, ` +
+    `which started on *${(currentReading.start as unknown as Timestamp)
       .toDate()
-      .toDateString()}\n\n` +
-    `🏆 Reading progress\n\n` +
+      .toDateString()}* \n\n` +
+    `🏆 Reading progress \n\n` +
     readerEntriesSorted
-      .map(([_, rp]) => `* ${rp.name}: ${rp.pctg}% \n`)
-      .join('');
+      .map(([_, rp]) => `• ${rp.name}: ${rp.pctg}% \n`)
+      .join('') +
+    '\n\n';
 
-  ctx.reply(msg);
+  ctx.reply(msg, { parse_mode: 'MarkdownV2' });
 }
