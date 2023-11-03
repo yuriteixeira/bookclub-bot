@@ -5,6 +5,15 @@ export async function updateProgressCurrentReading(
   conversation: BotConversation,
   ctx: BotContext
 ) {
+  await ctx.reply(
+    `📚 How much you have read (percentage, type only the number)?`
+  );
+  const pctg = await conversation.form.number();
+  ctx.match = String(pctg);
+  updateProgressCurrentReadingCommand(ctx);
+}
+
+export async function updateProgressCurrentReadingCommand(ctx: BotContext) {
   const id = ctx.from?.id;
 
   if (!id) {
@@ -30,10 +39,14 @@ export async function updateProgressCurrentReading(
     return;
   }
 
-  await ctx.reply(
-    `📚 How much you have read (percentage, type only the number)?`
-  );
-  const pctg = await conversation.form.number();
+  const pctg = Number(ctx.match);
+
+  if (!pctg) {
+    await ctx.reply(
+      'Percentage not informed!'
+    );
+    return;
+  }
 
   await readingModel.updateProgressCurrentReading(id, pctg);
 

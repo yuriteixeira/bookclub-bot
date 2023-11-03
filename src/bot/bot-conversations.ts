@@ -5,7 +5,7 @@ import { ReadingModel } from '../model/types';
 import { startNewReading } from './convos/start-new-reading';
 import { joinCurrentReading } from './convos/join-current-reading';
 import { leaveCurrentReading } from './convos/leave-current-reading';
-import { updateProgressCurrentReading } from './convos/update-progress-current-reading';
+import { updateProgressCurrentReading, updateProgressCurrentReadingCommand } from './convos/update-progress-current-reading';
 import {
   getCurrentReading,
   getCurrentReadingCommand,
@@ -26,6 +26,7 @@ export function registerCommandsAndConversations(bot: Bot<BotContext>) {
   });
 
   bot.command('summary', getCurrentReadingCommand);
+  bot.command('progress', updateProgressCurrentReadingCommand);
 }
 
 function registerConversations(bot: Bot<BotContext>) {

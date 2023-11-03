@@ -12,6 +12,10 @@ const commands = [
     command: 'summary',
     description: 'Summary of current reading',
   },
+  {
+    command: 'progress',
+    description: 'Update your progress on current reading (eg: /progress 10, for 10% completion)',
+  },
 ];
 
 export function registerSettings(bot: Bot<BotContext>) {

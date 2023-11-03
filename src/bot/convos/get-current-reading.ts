@@ -23,6 +23,7 @@ export async function getCurrentReadingCommand(ctx: BotContext) {
     })
     .reverse();
 
+  // TODO: Refactor, extracting formatting functions to un-pollute code (also, split message in multiple parts)
   const msg =
     `*Summary of [${currentReading.book.name}](${
       currentReading.book.url || '#nolink'
