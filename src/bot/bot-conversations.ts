@@ -1,4 +1,4 @@
-import { Bot, InlineKeyboard, session } from 'grammy';
+import { Bot, CommandContext, InlineKeyboard, session } from 'grammy';
 import { BotContext } from './bot';
 import { conversations, createConversation } from '@grammyjs/conversations';
 import { ReadingModel } from '../model/types';
@@ -8,14 +8,30 @@ import { leaveCurrentReading } from './convos/leave-current-reading';
 import { updateProgressCurrentReading } from './convos/update-progress-current-reading';
 import { getCurrentReading } from './convos/get-current-reading';
 
+import 'dotenv/config';
+import {permissionsModel} from '../dic';
+
 type Option = keyof ReadingModel;
 type OptionsWithDescription = Record<Option, string>;
 
-const testGroupId = -1002129590777;
-const bookclubGroupId = -1001542621265;
-const allowedGroups = [ testGroupId, bookclubGroupId ];
+export function registerCommandsAndConversations(bot: Bot<BotContext>) {
+  registerConversations(bot);
 
-export function conversationsBotDecorator(bot: Bot<BotContext>) {
+  bot.command(['start', 'help'], async (ctx) => {
+    if (!userOrGroupIsAllowed(ctx)) {
+      ctx.reply(
+        `❌ Access denied for this group (ID ${ctx.chat.id}). Sorry :/`
+      );
+      return;
+    }
+
+    ctx.reply('Welcome to BookClubBot! How can I help you today?', {
+      reply_markup: getOptionsKeyboard(),
+    });
+  });
+}
+
+function registerConversations(bot: Bot<BotContext>) {
   bot.use(session({ initial: () => ({}) }));
   bot.use(conversations());
 
@@ -33,17 +49,12 @@ export function conversationsBotDecorator(bot: Bot<BotContext>) {
 
   bot.use(createConversation(getCurrentReading));
   assignBotConversationForOption(bot, 'getCurrentReading');
+}
 
-  bot.command(['start', 'help'], async (ctx) => {
-    if (!allowedGroups.find((id) => id === ctx.chat.id)) {
-      ctx.reply(`❌ Access denied for this group (ID ${ctx.chat.id}). Sorry :/`);
-      return;
-    }
-
-    ctx.reply('Welcome to BookClubBot! How can I help you today?', {
-      reply_markup: getOptionsKeyboard(),
-    });
-  });
+async function userOrGroupIsAllowed(ctx: CommandContext<BotContext>) {
+  const allowedGroups = await permissionsModel.getAllowedGroups();
+  if (!allowedGroups) return false;
+  return allowedGroups.find((id) => id === ctx.chat.id);
 }
 
 function assignBotConversationForOption(bot: Bot<BotContext>, option: Option) {

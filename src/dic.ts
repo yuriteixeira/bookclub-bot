@@ -1,2 +1,2 @@
-export { readingModel } from './model/firestore-model';
+export { readingModel, permissionsModel } from './model/firestore-model';
 

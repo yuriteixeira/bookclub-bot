@@ -7,7 +7,14 @@ import {
   getFirestore,
 } from 'firebase-admin/firestore';
 
-import { ReaderId, Reading, ReadingModel, ReadingProgress } from './types';
+import {
+  Permissions,
+  PermissionsModel,
+  ReaderId,
+  Reading,
+  ReadingModel,
+  ReadingProgress,
+} from './types';
 
 import 'dotenv/config';
 
@@ -34,18 +41,16 @@ function db() {
 
 type CollectionTypes = {
   readings: Reading;
-  readings_dev: Reading;
+  permissions: Permissions;
 };
 
 type Collections = keyof CollectionTypes;
 
-const collectionName =
-  process.env.NODE_ENV === 'production' ? 'readings' : 'readings_dev';
-
 const getCollection = <T extends Collections>(collectionName: T) =>
   db().collection(collectionName) as CollectionReference<CollectionTypes[T]>;
 
-const currentReadingDoc = getCollection(collectionName).doc('current');
+const currentReadingDoc = getCollection('readings').doc('current');
+const permissionsDoc = getCollection('permissions').doc('current');
 
 export const readingModel: ReadingModel = {
   async startNewReading(book) {
@@ -85,5 +90,18 @@ export const readingModel: ReadingModel = {
     await currentReadingDoc.update({
       [`readersProgress.${id}.pctg`]: pctg,
     });
+  },
+};
+
+export const permissionsModel: PermissionsModel = {
+  async getAllowedGroups() {
+    const doc = await permissionsDoc.get();
+    if (!doc.exists) return;
+    return doc.data()?.allowedGroups;
+  },
+  async getAllowedUsernames() {
+    const doc = await permissionsDoc.get();
+    if (!doc.exists) return;
+    return doc.data()?.allowedUsernames;
   },
 };

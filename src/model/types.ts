@@ -28,3 +28,13 @@ export type ReadingModel = {
   leaveCurrentReading: (id: ReaderId) => Promise<void>;
   updateProgressCurrentReading: (id: ReaderId, pctg: number) => Promise<void>;
 };
+
+export type Permissions = {
+  allowedGroups: number[]
+  allowedUsernames: string[]
+}
+
+export type PermissionsModel = {
+  getAllowedGroups: () => Promise<Permissions['allowedGroups'] | undefined>;
+  getAllowedUsernames: () => Promise<Permissions['allowedUsernames'] | undefined>;
+}

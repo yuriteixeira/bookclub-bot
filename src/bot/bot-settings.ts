@@ -41,7 +41,7 @@ const commands = [
   */
 ];
 
-export function settingsBotDecorator(bot: Bot<BotContext>) {
+export function registerSettings(bot: Bot<BotContext>) {
   bot.api.setMyDescription(description);
   bot.api.setMyCommands(commands);
 }

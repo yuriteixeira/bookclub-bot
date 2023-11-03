@@ -2,10 +2,7 @@ import { BotContext, BotConversation } from '../bot';
 import { readingModel } from '../../dic';
 import { Timestamp } from 'firebase-admin/firestore';
 
-export async function getCurrentReading(
-  _: BotConversation,
-  ctx: BotContext
-) {
+export async function getCurrentReading(_: BotConversation, ctx: BotContext) {
   const currentReading = await readingModel.getCurrentReading();
 
   if (!currentReading) {
@@ -16,9 +13,11 @@ export async function getCurrentReading(
   }
 
   const readersEntries = Object.entries(currentReading.readersProgress);
-  const readerEntriesSorted = readersEntries.sort(([_a, a], [_b, b]) => {
-    return a.pctg - b.pctg;
-  });
+  const readerEntriesSorted = readersEntries
+    .sort(([_a, a], [_b, b]) => {
+      return a.pctg - b.pctg;
+    })
+    .reverse();
 
   const msg =
     `Summary of ${currentReading.book.name} (${
@@ -28,7 +27,9 @@ export async function getCurrentReading(
       .toDate()
       .toDateString()}\n\n` +
     `🏆 Reading progress\n\n` +
-    readerEntriesSorted.map(([_, rp]) => `- ${rp.name}: ${rp.pctg}%\n`);
+    readerEntriesSorted
+      .map(([_, rp]) => `* ${rp.name}: ${rp.pctg}% \n`)
+      .join('');
 
   ctx.reply(msg);
 }
