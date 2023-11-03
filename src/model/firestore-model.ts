@@ -98,9 +98,9 @@ export const permissionsModel: PermissionsModel = {
     if (!doc.exists) return;
     return doc.data()?.allowedGroups;
   },
-  async getAllowedUsernames() {
+  async getAllowedUsers() {
     const doc = await permissionsDoc.get();
     if (!doc.exists) return;
-    return doc.data()?.allowedUsernames;
+    return doc.data()?.allowedUsers;
   },
 };

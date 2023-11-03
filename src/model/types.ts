@@ -31,10 +31,10 @@ export type ReadingModel = {
 
 export type Permissions = {
   allowedGroups: number[]
-  allowedUsernames: string[]
+  allowedUsers: string[]
 }
 
 export type PermissionsModel = {
   getAllowedGroups: () => Promise<Permissions['allowedGroups'] | undefined>;
-  getAllowedUsernames: () => Promise<Permissions['allowedUsernames'] | undefined>;
+  getAllowedUsers: () => Promise<Permissions['allowedUsers'] | undefined>;
 }

@@ -10,9 +10,9 @@ export async function authCheck(
 
   if (!isAuthorized) {
     throw new Error(
-      `Access denied for this group (ID ${ctx.chat?.id}). Sorry :/`
+      `Access denied for this group (ID ${ctx.chat?.id}) or user (@${ctx.from?.username}). Sorry :/`
     );
-  } 
+  }
 
   await next();
 }
@@ -20,5 +20,13 @@ export async function authCheck(
 async function userOrGroupIsAllowed(ctx: BotContext) {
   const allowedGroups = await permissionsModel.getAllowedGroups();
   if (!allowedGroups) return false;
-  return !!allowedGroups.find((id) => id === ctx.chat?.id);
+  const isGroupAllowed = !!allowedGroups.find((id) => id === ctx.chat?.id);
+
+  const allowedUsers = await permissionsModel.getAllowedUsers();
+  if (!allowedUsers) return false;
+  const isUserAllowed = !!allowedUsers.find(
+    (username) => username === ctx.from?.username
+  );
+
+  return isGroupAllowed || isUserAllowed;
 }
